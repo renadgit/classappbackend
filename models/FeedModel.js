@@ -36,7 +36,8 @@ const FeedSchema = new Schema({
     },
     seenBy: {
         type: Array,
-        default: "everyone"
+        default: "everyone",
+    
     },
     date: {
         type: Date,

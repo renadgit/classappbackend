@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 
 //assign the schema object
 const Schema = mongoose.Schema;
+var ClassSchema = new Schema({ classname: String, subjectname: String, childname: String });
 
 const TeacherSchema = new Schema({
-    firstName:
+    firstname:
     {
         type: String,
         require: true
     },
-    lastName: {
+    lastname: {
         type: String,
         require: true
     },
@@ -22,10 +23,12 @@ const TeacherSchema = new Schema({
         type: String,
         require: true,
     },
-    classes: {
+    classes:{
         type: Array,
         require: true
     }
+    
+    
 
 });
 

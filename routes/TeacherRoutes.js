@@ -55,7 +55,7 @@ bcrypt.genSalt((err, salt)=>{
     )
 });
 });
-router.post('/teacherlogin', (req, res)=>{
+router.post('/login', (req, res)=>{
 
 const email = req.body.email;
 const password = req.body.password;
@@ -81,7 +81,7 @@ TeacherModel
                     payload,
                     secret,
                     (err, theJWT)=>{
-                        res.json({ token: theJWT })
+                        res.json({ token: theJWT, teacherid : theTeacher.id })
                     }
                 )
 

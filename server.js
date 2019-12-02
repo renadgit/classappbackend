@@ -48,7 +48,11 @@ app.get(
         .catch((err)=>console.log(err))
     }
 );
-//app.use('/feed',passport.authenticate('jwt',{session:false}),FeedRoutes);
+// app.use(
+//     '/feed',
+//     passport.authenticate('jwt', {session: false}),
+//     FeedRoutes
+// );
 app.use('/',PageRoutes);
 /*
     Our first route

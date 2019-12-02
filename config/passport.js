@@ -9,7 +9,7 @@ const UserModel = require('../models/UserModel');
 // Options for passport-jwt
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.SECRET
+    secretOrKey: secret
 };
 
 // Create a function for authentication each express request

@@ -27,15 +27,21 @@ router.post('/newfeed', (req, res)=>{
 
 });
 
+
 router.post('/addlike', async (req, res)=>{
     
     let userLikes;
     let theFeedID = req.body.feedid;
+    console.log('feedid',theFeedID)
+    console.log('userID',req.body.userid)
     let userID = req.body.userid;
+    
     // 1. Get the document with matching id
     let theDocument = await FeedModel
     .find({_id: theFeedID}) // promise
-
+    .catch(err=>{
+        res.send(err)
+    })
     // 2. Extract the likes from the document
     userLikes = theDocument[0].likes;
 
@@ -60,8 +66,6 @@ router.post('/addlike', async (req, res)=>{
     .catch(err=>{
         res.json(err)
     });
-
-
 //remove like
 });
 

@@ -16,9 +16,6 @@ router.post('/register', (req, res)=>{
         classes: req.body.classes    
     }
 
-    
-
-
 const newParent = new ParentModel(formData);
 // Step 1. Generate a salt (random data for adding complexity)
 bcrypt.genSalt((err, salt)=>{
@@ -62,48 +59,91 @@ bcrypt.genSalt((err, salt)=>{
 });
 router.post('/login', (req, res)=>{
 
-const email = req.body.email;
-const password = req.body.password;
+    const email = req.body.email;
+    const password = req.body.password;
 
-ParentModel
-.findOne({ email: email }) //{}
-.then((theParent)=>{
-    if(theParent) {
-        
-        bcrypt
-        .compare(password, theParent.password)
-        .then((isMatch)=>{
+    ParentModel
+    .findOne({ email: email }) //{}
+    .then((theParent)=>{
+        if(theParent) {
+            console.log(theParent)
+            bcrypt
+            .compare(password, theParent.password)
+            .then((isMatch)=>{
 
-            console.log(isMatch)
-            if(isMatch) {
+                console.log(isMatch)
+                if(isMatch) {
 
-                const payload = {
-                    id: theParent.id,
-                    email: theParent.email
-                }
-
-                jwt.sign(
-                    payload,
-                    secret,
-                    (err, theJWT)=>{
-                        res.json({ token: theJWT })
+                    const payload = {
+                        id: theParent.id,
+                        email: theParent.email
                     }
-                )
+                    jwt.sign(
+                        payload,
+                        secret,
+                        (err, theJWT)=>{
+                            res.json({ token: theJWT, parentid: theParent.id })
+                        }
+                    )
 
-            } else {
-                res.json({ message: 'Wrong password' })
-            }
-        })
-        .catch()
+                } else {
+                    res.json({ message: 'Wrong password' })
+                }
+            })
+            .catch()
 
 
-    } else {
-        res.json({ message: "No parent with this account exists" })
-    }
-})
-.catch()
+        } else {
+            res.json({ message: "No Parent with this account exists" })
+        }
+    })
+    .catch()
 
 });
+// router.post('/login', (req, res)=>{
+
+// const email = req.body.email;
+// const password = req.body.password;
+
+// ParentModel
+// .findOne({ email: email }) //{}
+// .then((theParent)=>{
+//     if(theParent) {
+        
+//         bcrypt
+//         .compare(password, theParent.password)
+//         .then((isMatch)=>{
+
+//             console.log(isMatch)
+//             if(isMatch) {
+
+//                 const payload = {
+//                     id: theParent.id,
+//                     email: theParent.email
+//                 }
+
+//                 jwt.sign(
+//                     payload,
+//                     secret,
+//                     (err, theJWT)=>{
+//                         res.json({ token: theJWT })
+//                     }
+//                 )
+
+//             } else {
+//                 res.json({ message: 'Wrong password' })
+//             }
+//         })
+//         .catch()
+
+
+//     } else {
+//         res.json({ message: "No parent with this account exists" })
+//     }
+// })
+// .catch()
+
+// });
 
 // router.post('/addlike', async (req, res)=>{
     
