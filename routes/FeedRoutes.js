@@ -1,4 +1,6 @@
 const FeedModel = require('../models/FeedModel');
+const ParentModel = require('../models/ParentModel');
+const ChildModel = require('../models/ChildModel');
 const express = require('express');
 const router = express.Router();
 
@@ -68,5 +70,35 @@ router.post('/addlike', async (req, res)=>{
     });
 //remove like
 });
+
+
+router.post( 
+    '/mychildren',
+    (req, res)=> {
+let childrenArray=[];
+        ParentModel.find({"_id": req.body.id})//find parent with this id
+        .then((users)=>{
+            let children = users[0].children //get children id of parent
+            console.log(children)
+            
+                for(let i=0;i<children.length;i++)
+                {
+                    ChildModel.find({"_id":children[i]}).then(child=>{
+                        childrenArray.push(child[0]);
+                        if(i==(children.length)-1)
+                        res.json(childrenArray)
+                    })
+                }
+        })
+
+        .catch((err)=>console.log(err))
+    });
+
+    router.get( 
+        '/mychildfeed',
+        (req, res)=> {
+            let groups = req.body.groups; //array of groups for child
+            FeedModel.find({"seenBy":{$in:groups}}).then(feed=>{res.json(feed)}).catch(err=>console.log(err))
+        })
 
 module.exports = router;

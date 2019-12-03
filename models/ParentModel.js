@@ -34,6 +34,10 @@ const ParentSchema = new Schema({
     classes:{
         type: Array,
         require: true
+    },
+    groups:{
+        type: Array,
+        require: true
     }
 
 });

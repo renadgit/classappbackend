@@ -11,6 +11,7 @@ const FeedRoutes = require('./routes/FeedRoutes');
 const PageRoutes = require('./routes/PageRoutes');
 const ParentRoutes = require('./routes/ParentRoutes');
 const TeacherRoutes = require('./routes/TeacherRoutes');
+const ChildRoutes = require('./routes/ChildRoutes');
 
 const initPassportStrategy = require('./config/passport')
 // Create an express app
@@ -37,6 +38,7 @@ app.use('/users',UserRoutes);
 app.use('/parent',ParentRoutes);
 app.use('/Teacher',TeacherRoutes);
 app.use('/feed',FeedRoutes);
+app.use('/child',ChildRoutes);
 
 app.get( 
     '/feed/all',

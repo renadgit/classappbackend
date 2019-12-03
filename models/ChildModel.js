@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 //assign the schema object
 const Schema = mongoose.Schema;
 
-const TeacherSchema = new Schema({
+const ChildSchema = new Schema({
     firstname:
     {
         type: String,
@@ -16,19 +16,19 @@ const TeacherSchema = new Schema({
     },
     email: {
         type: String,
-        require: true,
     },
-    password: {
-        type: String,
-        require: true,
+    age:
+    {
+    type: Number
     },
-    classes:{
+    groups:{
         type: Array,
         require: true
+    },
+    class:{
+        type: String,
+        
     }
-    
-    
-
 });
 
-module.exports = Teacher = mongoose.model('teacher', TeacherSchema);
+module.exports = Child = mongoose.model('child', ChildSchema);
