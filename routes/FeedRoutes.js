@@ -35,8 +35,8 @@ router.post('/addlike', async (req, res)=>{
     let userLikes;
     let theFeedID = req.body.feedid;
     console.log('feedid',theFeedID)
-    console.log('userID',req.body.userid)
-    let userID = req.body.userid;
+    console.log('userID',req.user.id)
+    let userID = req.user.id;//req.user.id doesnt work!!!!! req.user.id
     
     // 1. Get the document with matching id
     let theDocument = await FeedModel
@@ -81,23 +81,17 @@ let childrenArray=[];
             let children = users[0].children //get children id of parent
             console.log(children)
             
-                for(let i=0;i<children.length;i++)
-                {
-                    ChildModel.find({"_id":children[i]}).then(child=>{
-                        childrenArray.push(child[0]);
-                        if(i==(children.length)-1)
-                        res.json(childrenArray)
-                    })
-                }
+            ChildModel.find({"_id":{$in:users[0].children}}).then(childrenArray=>{res.json(childrenArray)}).catch(err=>console.log(err))
         })
 
         .catch((err)=>console.log(err))
     });
 
-    router.get( 
+    router.post( 
         '/mychildfeed',
         (req, res)=> {
             let groups = req.body.groups; //array of groups for child
+            console.log(groups)
             FeedModel.find({"seenBy":{$in:groups}}).then(feed=>{res.json(feed)}).catch(err=>console.log(err))
         })
 
