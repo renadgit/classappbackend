@@ -100,86 +100,23 @@ router.post('/login', (req, res)=>{
     .catch()
 
 });
-// router.post('/login', (req, res)=>{
 
-// const email = req.body.email;
-// const password = req.body.password;
-
-// ParentModel
-// .findOne({ email: email }) //{}
-// .then((theParent)=>{
-//     if(theParent) {
+router.post('/find', async (req, res)=>{
+    const theParent = await ParentModel.findById(req.body.id)
+    .then(theParent=>{
+        res.json(theParent);
+    })
+    .catch(err=>{
+        res.send(err)
         
-//         bcrypt
-//         .compare(password, theParent.password)
-//         .then((isMatch)=>{
+    })
+    console.log("theparent",theParent)
+});
 
-//             console.log(isMatch)
-//             if(isMatch) {
+//can i use req.user.id on a route with no passport authentication? can i use passport authentication on a get api
+//undefined parent ? why
 
-//                 const payload = {
-//                     id: theParent.id,
-//                     email: theParent.email
-//                 }
+   
 
-//                 jwt.sign(
-//                     payload,
-//                     secret,
-//                     (err, theJWT)=>{
-//                         res.json({ token: theJWT })
-//                     }
-//                 )
-
-//             } else {
-//                 res.json({ message: 'Wrong password' })
-//             }
-//         })
-//         .catch()
-
-
-//     } else {
-//         res.json({ message: "No parent with this account exists" })
-//     }
-// })
-// .catch()
-
-// });
-
-// router.post('/addlike', async (req, res)=>{
-    
-//     let userLikes;
-//     let theFeedID = req.body.feedid;
-//     let userID = req.body.userid;
-//     // 1. Get the document with matching id
-//     let theDocument = await FeedModel
-//     .find({_id: theFeedID}) // promise
-
-//     // 2. Extract the likes from the document
-//     userLikes = theDocument[0].likes;
-
-//     // 3. Push the new like to the array
-//     if(userLikes.includes(userID))
-//     {
-//      userLikes.splice(userLikes.indexOf(userID),1);
-//     }
-//     else
-//     {
-//     userLikes.push(userID);
-//     }   
-//     // 4. Update the document
-//     FeedModel
-//     .updateOne(
-//         {_id: theFeedID},
-//         {likes: userLikes}
-//     ) //promise
-//     .then(theFeed=>{
-//         res.json(theFeed)
-//     })
-//     .catch(err=>{
-//         res.json(err)
-//     });
-
-
-//remove like
 
 module.exports = router;

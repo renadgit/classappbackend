@@ -36,7 +36,7 @@ router.post('/addlike', async (req, res)=>{
     let theFeedID = req.body.feedid;
     console.log('feedid',theFeedID)
     console.log('userID',req.user.id)
-    let userID = req.user.id;//req.user.id doesnt work!!!!! req.user.id
+    let userID = req.user.id;
     
     // 1. Get the document with matching id
     let theDocument = await FeedModel
@@ -94,5 +94,16 @@ let childrenArray=[];
             console.log(groups)
             FeedModel.find({"seenBy":{$in:groups}}).then(feed=>{res.json(feed)}).catch(err=>console.log(err))
         })
+
+        router.get( 
+            '/all',
+            (req, res)=> {
+                FeedModel.find()
+                .then((users)=>{
+                    res.json(users);
+                })
+                .catch((err)=>console.log(err))
+            }
+        );
 
 module.exports = router;

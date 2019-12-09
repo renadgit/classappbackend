@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 const UserRoutes = require('./routes/UserRoutes');
+const InboxRoutes = require('./routes/InboxRoutes');
 const FeedRoutes = require('./routes/FeedRoutes');
 const PageRoutes = require('./routes/PageRoutes');
 const ParentRoutes = require('./routes/ParentRoutes');
@@ -33,23 +34,29 @@ mongoose
     console.log('error', err)
 })
 
+/*app.get('/parent/find', passport.authenticate('jwt', {session: false}),(req, res)=>{
+    
+    console.log(req.user.id)
+    
+    ParentModel.find({_id: req.user.id})
+    .then(theParent=>{
+        res.json(theParent);
+    })
+    .catch(err=>{
+        res.send(err)
+
+    })
+    console.log("theparent",theParent)
+});*/
 
 app.use('/users',UserRoutes);
 app.use('/parent',ParentRoutes);
 app.use('/Teacher',TeacherRoutes);
 app.use('/feed',FeedRoutes);
 app.use('/child',ChildRoutes);
+app.use('/inbox',InboxRoutes);
 
-app.get( 
-    '/feed/all',
-    (req, res)=> {
-        FeedModel.find()
-        .then((users)=>{
-            res.json(users);
-        })
-        .catch((err)=>console.log(err))
-    }
-);
+
 // app.use(
 //     '/feed',
 //     passport.authenticate('jwt', {session: false}),
